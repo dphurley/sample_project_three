@@ -1,4 +1,4 @@
-# sample_project_two
+# sample_project_three
 
 ## To start: `npm run dev`
 
