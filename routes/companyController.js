@@ -12,20 +12,12 @@ router.get('/', (request, response) => {
         .then((companies) => {
 
             // THEN once they come back from the database
-            // RENDER them in Handlebars
-            response.render('companies/index', {
-                companies: companies
-            })
+            // send them as JSON
+            response.send(companies)
         })
         .catch((error) => {
             console.log(error)
         })
-})
-
-// NEW route
-router.get('/new', (request, response) => {
-    // RENDER an empty form for the new company
-    response.render('companies/new')
 })
 
 // CREATE route
@@ -39,27 +31,6 @@ router.post('/', (request, response) => {
         .then(() => {
             // THEN once the model has saved, redirect to the Companies INDEX
             response.redirect('/companies')
-        })
-        .catch((error) => {
-            console.log(error)
-        })
-})
-
-// EDIT route
-router.get('/:companyId/edit', (request, response) => {
-
-    // GRAB the company ID from the parameters
-    const companyId = request.params.companyId
-
-    // FIND the company by ID using the CompanyModel
-    CompanyModel.findById(companyId)
-        .then((company) => {
-            // THEN once the company has been returned from
-            // the database, RENDER a form containing the current
-            // company information
-            response.render('companies/edit', {
-                company: company
-            })
         })
         .catch((error) => {
             console.log(error)
@@ -99,10 +70,8 @@ router.get('/:companyId', (request, response) => {
     CompanyModel.findById(companyId)
         .then((company) => {
             // THEN once the company comes back from the database,
-            // render the single company's info using Handlebars
-            response.render('companies/show', {
-                company: company
-            })
+            // send the single company's info as JSON
+            response.json(company)
         })
         .catch((error) => {
             console.log(error)

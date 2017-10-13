@@ -1,12 +1,12 @@
 require('dotenv').config();
 
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
+const express = require('express');
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 const methodOverride = require('method-override')
 
 // Database Set-up
@@ -21,7 +21,7 @@ db.once('open', () => {
   console.log('Connected to MongoDB!')
 })
 
-var app = express();
+const app = express();
 
 app.use(methodOverride('_method'))
 
@@ -38,18 +38,18 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Register Controllers
-var indexController = require('./routes/indexController');
+const indexController = require('./routes/indexController');
 app.use('/', indexController);
 
 const companyController = require('./routes/companyController')
-app.use('/companies', companyController)
+app.use('/api/companies', companyController)
 
 const snowboardController = require('./routes/snowboardController')
-app.use('/companies/:companyId/snowboards', snowboardController)
+app.use('/api/companies/:companyId/snowboards', snowboardController)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  var err = new Error('Not Found');
+  const err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
